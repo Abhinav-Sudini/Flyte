@@ -1,5 +1,4 @@
-
-package main
+package fs
 
 import (
 	"fmt"
@@ -52,7 +51,7 @@ func formatPar(par int) string {
 	if par == -1 {
 		return "null"
 	} else {
-		return fmt.Sprintf("%d",par)
+		return fmt.Sprintf("%d", par)
 	}
 }
 
@@ -89,28 +88,29 @@ func get_all_files_ase(path string) ([]Entry, error) {
 	})
 	return list, nil
 }
-func dfs_add_files(root string, par int, out []string) ([]string,error) {
+func dfs_add_files(root string, par int, out []string) ([]string, error) {
 	entries, err := get_all_files_ase(root)
 	if err != nil {
-		return out,err
+		return out, err
 	}
 	for _, entr := range entries {
 		tem := fmt.Sprintf("{ \"id\": %d, \"parentId\": %s, \"name\": \"%s\", \"type\": \"%s\", \"size\": \"%s\", \"date\": \"%s\"}", len(out)+1, formatPar(par), entr.Name, typeOf(entr.Name, entr.isDir), formatSize(entr.Size), formatDate(entr.ModTime))
 		out = append(out, tem)
 		if entr.isDir {
 			fmt.Println(entr.Name)
-			out,_ = dfs_add_files(root+"/"+entr.Name, len(out), out)
+			out, _ = dfs_add_files(root+"/"+entr.Name, len(out), out)
 		}
 	}
-	return out,nil
+	return out, nil
 }
 func DirToJSON(root string) (string, error) {
 	var out []string
-	out,err := dfs_add_files(root, -1, out)
+	out, err := dfs_add_files(root, -1, out)
 	jsonStr := "[\n  " + strings.Join(out, ",\n  ") + "\n]"
 	fmt.Println(jsonStr)
-	return jsonStr,err
+	return jsonStr, err
 }
+
 // func main(){
 // 	out,err := DirToJSON("/home/abhi/code/projects/Flyte")
 // 	fmt.Println(out,err)
