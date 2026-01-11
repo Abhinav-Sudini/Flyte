@@ -23,15 +23,14 @@ const (
 	FS_URL   = "/api/fs/"
 )
 
-const (
-	STATIC_FILES_PATH = "./static/"
-)
-
 func main() {
-	fmt.Println("Now Listening on 80")
+	fmt.Println("Starting server")
+	fmt.Println("sering on http://localhost:", PORT)
+
 	http.HandleFunc(BASE_URL, handlers.ServeFiles)
 	http.HandleFunc(FS_URL, handlers.ServeFS)
 	http.ListenAndServe(":8000", nil)
+
 }
 
 func OSReadDir(root string) ([]string, error) {

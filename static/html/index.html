@@ -266,7 +266,8 @@
             const res = await fetch("/api/fs/Home/");
             MOCK_FILES = await res.json(); // ← updated HERE
             console.log("inside:", MOCK_FILES);
-          state.files= [...MOCK_FILES];
+            state.files= [...MOCK_FILES];
+            state.selectedId = null
 
             render()
         }
@@ -460,7 +461,7 @@
             formData.append("old_file_name",old_file.name)
             formData.append("new_file_name",new_file_name)
 
-            await fetch('/api/fs/', {method: "POST", body: formData});
+            await fetch('/api/fs/', {method: "PUT", body: formData});
 
             
             showToast(`rename done`);
@@ -480,7 +481,7 @@
             formData.append("operation", "delete");
             formData.append("file_name",file.name)
 
-            await fetch('/api/fs/', {method: "POST", body: formData});
+            await fetch('/api/fs/', {method: "DELETE", body: formData});
 
             
             showToast(`delete done`);
