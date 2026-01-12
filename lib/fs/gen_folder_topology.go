@@ -97,7 +97,7 @@ func dfs_add_files(root string, par int, out []string) ([]string, error) {
 		tem := fmt.Sprintf("{ \"id\": %d, \"parentId\": %s, \"name\": \"%s\", \"type\": \"%s\", \"size\": \"%s\", \"date\": \"%s\"}", len(out)+1, formatPar(par), entr.Name, typeOf(entr.Name, entr.isDir), formatSize(entr.Size), formatDate(entr.ModTime))
 		out = append(out, tem)
 		if entr.isDir {
-			fmt.Println(entr.Name)
+			// fmt.Println(entr.Name)
 			out, _ = dfs_add_files(root+"/"+entr.Name, len(out), out)
 		}
 	}
@@ -107,7 +107,7 @@ func DirToJSON(root string) (string, error) {
 	var out []string
 	out, err := dfs_add_files(root, -1, out)
 	jsonStr := "[\n  " + strings.Join(out, ",\n  ") + "\n]"
-	fmt.Println(jsonStr)
+	//fmt.Println(jsonStr)
 	return jsonStr, err
 }
 

@@ -52,7 +52,6 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if operation == "new-folder" {
-		log.Println(upload_directory)
 		err := store.SaveNewFolder(auth.GetUserId(r), upload_directory)
 		if err != nil {
 			log.Println(err.Error())
@@ -65,14 +64,15 @@ func HandlePost(w http.ResponseWriter, r *http.Request) {
 
 	new_file, handler, err := r.FormFile("file")
 	if err != nil {
+		log.Println(err.Error())
 		http.Error(w, "failed parsing file", http.StatusInternalServerError)
 		return
 	}
 	defer new_file.Close()
 
 	err = store.SaveNewFile(auth.GetUserId(r), upload_directory, new_file, handler)
-	log.Println(err,upload_directory)
 	if err != nil {
+		log.Println(err.Error())
 		http.Error(w, "unable to save file", http.StatusInternalServerError)
 		return
 	}
