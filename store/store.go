@@ -54,8 +54,9 @@ func RenameFile(user_id int, upload_dir string, old_file_name string, new_file_n
 	if util.Dir_not_exist(server_upload_dir) {
 		return errors.New("dir does not exist")
 	}
-	if util.File_not_exist(filepath.Join(server_upload_dir, old_file_name)) {
-		return errors.New("file does not exist")
+	if util.File_not_exist(filepath.Join(server_upload_dir, old_file_name)) &&
+		 util.Dir_not_exist(filepath.Join(server_upload_dir, old_file_name)) {
+		return errors.New("file/Dir does not exist")
 	}
 	return os.Rename(filepath.Join(server_upload_dir, old_file_name), filepath.Join(server_upload_dir, new_file_name))
 }

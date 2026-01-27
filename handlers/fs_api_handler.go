@@ -117,6 +117,7 @@ func HandlePUT(w http.ResponseWriter, r *http.Request) {
 	}
 	old_file_name := r.FormValue("old_file_name")
 	new_file_name := r.FormValue("new_file_name")
+	// fmt.Println("upload5 : " , upload_directory,old_file_name,new_file_name)
 	err := store.RenameFile(auth.GetUserId(r),upload_directory,old_file_name,new_file_name)
 	if err != nil {
 		log.Println("rename failed -", err)
