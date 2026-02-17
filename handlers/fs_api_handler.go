@@ -43,7 +43,8 @@ func ServeFS(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandlePost(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(10 << 20) //10 MB
+	max_size := config.MAX_FILE_SIZE
+	r.ParseMultipartForm(max_size) //10 MB
 	upload_directory := r.FormValue("upload-loc")
 	operation := r.FormValue("operation")
 
@@ -108,7 +109,8 @@ func HandleGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandlePUT(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(10 << 20) //10 MB
+	max_size := config.MAX_FILE_SIZE
+	r.ParseMultipartForm(max_size) //10 MB
 	upload_directory := r.FormValue("upload-loc")
 	operation := r.FormValue("operation")
 
