@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"strings"
 
+	"Flyte/config"
 	"Flyte/lib/auth"
 	"Flyte/lib/fs"
 	"Flyte/store"
@@ -128,7 +129,8 @@ func HandlePUT(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 func HandleDelete(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(10 << 20) //10 MB
+	max_size := config.MAX_FILE_SIZE
+	r.ParseMultipartForm(max_size) //10 MB
 	upload_directory := r.FormValue("upload-loc")
 	operation := r.FormValue("operation")
 	file_name := r.FormValue("file_name")

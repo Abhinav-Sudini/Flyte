@@ -547,7 +547,7 @@
                 formData.append("file", file);
                 formData.append("upload-loc", getCWD());
                 formData.append("operation", "new-file");
-                await fetch('/api/fs/', {method: "POST", body: formData});
+                const response = await fetch('/api/fs/', {method: "POST", body: formData});
 
                 // state.files.push({
                 //     id: Date.now() + count,
@@ -558,9 +558,14 @@
                 //     date: 'Just now'
                 // });
                 count++;
+
+            if (response.ok){
+              showToast(`Uploaded ${count} file${count > 1 ? 's' : ''}`);
+            }else{
+              showToast(`status ${response.status} | body - ${response.body}`);
+            }
           }
             
-            showToast(`Uploaded ${count} file${count > 1 ? 's' : ''}`);
             reloadFiles();
         }
 

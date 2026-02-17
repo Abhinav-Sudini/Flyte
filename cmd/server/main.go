@@ -5,17 +5,20 @@ import (
 	_ "io"
 	_ "log"
 	"net/http"
+	"strconv"
+
 	// "net/http/httputil"
 	_ "net/url"
 	"os"
 	_ "path/filepath"
 	_ "strings"
 
+	"Flyte/config"
 	"Flyte/handlers"
 )
 
-const (
-	PORT = 8000
+var (
+	PORT = config.PORT
 )
 
 const (
@@ -24,6 +27,12 @@ const (
 )
 
 func main() {
+	if len(os.Args)==2{
+		p,err := strconv.Atoi(os.Args[1])
+		if err == nil {
+			PORT = p
+		}
+	}
 	fmt.Println("Starting server")
 	fmt.Println("sering on http://localhost:", PORT)
 
