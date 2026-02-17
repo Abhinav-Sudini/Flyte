@@ -5,7 +5,6 @@ import (
 	_ "io"
 	_ "log"
 	"net/http"
-	"strconv"
 
 	// "net/http/httputil"
 	_ "net/url"
@@ -28,17 +27,14 @@ const (
 
 func main() {
 	if len(os.Args)==2{
-		p,err := strconv.Atoi(os.Args[1])
-		if err == nil {
-			PORT = p
-		}
+		PORT = os.Args[1]
 	}
 	fmt.Println("Starting server")
 	fmt.Println("sering on http://localhost:", PORT)
 
 	http.HandleFunc(BASE_URL, handlers.ServeFiles)
 	http.HandleFunc(FS_URL, handlers.ServeFS)
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":"+PORT , nil)
 
 }
 
