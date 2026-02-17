@@ -1,6 +1,7 @@
 package store
 
 import (
+	"Flyte/config"
 	"Flyte/util"
 	"errors"
 	"io"
@@ -10,9 +11,6 @@ import (
 	"path/filepath"
 )
 
-const (
-	MAX_SAVE_FILE_SIZE = 10 << 20
-)
 
 func SaveNewFile(user_id int, upload_dir string, new_file multipart.File, handler *multipart.FileHeader) error {
 
@@ -22,7 +20,7 @@ func SaveNewFile(user_id int, upload_dir string, new_file multipart.File, handle
 		return errors.New("upload dir does not exist")
 	}
 
-	if handler.Size > MAX_SAVE_FILE_SIZE {
+	if handler.Size > config.MAX_FILE_SIZE {
 		return errors.New("to big of a file")
 	}
 
